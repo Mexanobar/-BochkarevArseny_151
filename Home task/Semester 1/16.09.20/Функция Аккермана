@@ -2,7 +2,7 @@
 
 using namespace std; 
 
-long akk(int n, int m)
+long long akk(int n, int m)
 {
 	if (n == 0)
 		return m + 1;
@@ -14,7 +14,9 @@ long akk(int n, int m)
 
 int main()
 {
-	cout << akk(3, 2);
+    int n, m;
+    cin >> n >> m;
+	cout << akk(n, m);
 
 	return 0;
 }
