@@ -1,5 +1,5 @@
 #include <iostream>
-
+//Вывести среднее арифметическое кубов чисел последовательности заданной длины n
 using namespace std;
 
 int main()
