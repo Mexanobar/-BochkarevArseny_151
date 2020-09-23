@@ -6,7 +6,7 @@ int main()
 {
 	int n;
 
-	float num, sum = 0;
+	double num, sum = 0;
 
 	cin >> n;
 
