@@ -1,0 +1,25 @@
+#include <iostream> 
+
+using namespace std;
+ 
+int main()
+{
+	const int n{ 13 };
+	int arr[n] = { 1, 29432, 72, 8, 15, 1222, 123, 5, 67, 22, 322, 777, 23233 };
+	int temp; 
+
+	for (int* i = arr; i < arr + n; i++)
+		for(int* j = i+1; j < arr + n; j++)
+			if (*i > *j)
+			{
+				temp = *i;
+				*i = *j;
+				*j = temp;
+			}
+	 
+	for (int i = 0; i < n; i++)
+		cout << arr[i] << " ";
+
+
+	return 0;
+} 
