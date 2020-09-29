@@ -1,0 +1,39 @@
+#include <iostream> 
+
+using namespace std;
+
+//Необходимо удалить из массива все чётные эл-ты и уменьшить его размер.
+//Не знаю, как без помощи vector изменить размер одного и того же массива, поэтому вышел из ситуации путём создания нового динамического массива,
+//инициализируемого нечётными элементами из старого, а затем удаления исходного массива
+ 
+int main()
+{
+	const int n{ 13 };
+	int *arr = new int[n]{ 1, 29432, 72, 8, 15, 1222, 123, 5, 67, 23, 322, 777, 23233 };
+	int count{ 0 };
+	int temp{ 0 };
+
+	for (int i = 0; i < n; i++)
+		if (arr[i] % 2 != 0)
+			count++;
+
+	if (count != 0)
+	{
+		int* new_arr = new int[count];
+
+		for (int i = 0; i < n; i++)
+			if (arr[i] % 2 != 0)
+			{
+				new_arr[temp] = arr[i];
+				temp++;
+			}
+		delete[] arr;
+
+		for (int i = 0; i < count; i++)
+			cout << new_arr[i] << " ";
+
+		delete[] new_arr;
+	}
+	
+	return 0;
+} 
