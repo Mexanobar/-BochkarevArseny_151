@@ -1,0 +1,136 @@
+#include <iostream> 
+
+
+//Необходимо реализовать структру рациональных чисел 
+
+using namespace std;
+
+int gcd(int a, int b)
+{
+	if (b == 0) return a;
+	return gcd(abs(b), abs(a) % abs(b));
+}
+
+int lcm(int a, int b)
+{
+	return ((a * b) / gcd(a, b));
+}
+
+struct Rational
+{
+	int m;
+
+	unsigned int n;
+
+	Rational(int x, unsigned int y)
+	{
+		m = x / gcd(x, y);
+		n = y / gcd(x, y);
+	}
+
+	Rational& operator *=(Rational& x)
+	{
+		m *= x.m;
+		n *= x.n;
+
+		int tmp_gcd = gcd(m, n);
+
+		m /= tmp_gcd;
+		n /= tmp_gcd;
+
+		return *this;
+	};
+
+	Rational& operator /=(Rational& x)
+	{
+		m *= x.n;
+		n *= x.m;
+
+		int tmp_gcd = gcd(m, n);
+
+		m /= tmp_gcd;
+		n /= tmp_gcd;
+
+		return *this;
+	};
+
+
+	Rational& operator +=(Rational& x)
+	{
+		int tmp_lcm = lcm(n, x.n);
+
+		m *= (tmp_lcm/n);
+		x.m *= (tmp_lcm / x.n);
+
+		m += x.m;
+		n = tmp_lcm;
+
+		int tmp_gcd = gcd(m, n);
+
+		m /= tmp_gcd;
+		n /= tmp_gcd;
+
+		return *this;
+	}
+
+	Rational& operator -=(Rational& x)
+	{
+		int tmp_lcm = lcm(n,  x.n);
+
+		m *= (tmp_lcm / n);
+		x.m *= (tmp_lcm / x.n); 
+
+		m -= x.m;
+		n = tmp_lcm;
+
+		int tmp_gcd = gcd(m, n);
+
+		m /= tmp_gcd;
+		n /= tmp_gcd;
+
+		return *this;
+	}
+};
+
+
+Rational& operator *(Rational& x, Rational& y)
+{
+	return x *= y;
+}
+
+Rational& operator /(Rational& x, Rational& y)
+{
+	return x /= y;
+}
+
+
+Rational& operator +(Rational& x, Rational& y)
+{
+	return x += y;
+}
+
+
+Rational& operator -(Rational& x, Rational& y)
+{
+	return x -= y;
+}
+
+ostream& operator<<(ostream& out, Rational a)
+{
+	out << a.m << "/" << a.n;
+	return out;
+}
+
+
+int main()
+{
+	//Пример выполнения операции
+	
+  Rational r1(1223, 57);
+	Rational r2(5, 1);
+  
+	cout << r1 << " + " << r2 << " = "; 
+	cout << r1 + r2;
+
+	return 0;
+} 
