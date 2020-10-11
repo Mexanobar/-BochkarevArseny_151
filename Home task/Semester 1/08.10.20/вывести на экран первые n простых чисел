@@ -1,0 +1,48 @@
+#include <iostream>  
+#include <cmath>
+
+//Написать программу, выводящую на экран первые n простых чисел
+
+//Сложность аналогична сложности решета Эратосфена - O(n*ln(ln n))
+
+using namespace std;
+
+void f(int n, bool* arr)
+{
+	for (int i = 0; i < n; i++)
+		arr[i] = false;
+
+	for (int i = 2; i < n; i++)
+		if (arr[i] != true)
+			for (int j = i * 2; j < n; j += i)
+				arr[j] = true;
+}
+
+int main()
+{
+	int n;
+
+	cin >> n; 
+
+	int count = n;
+  
+  //Вычислим count - размер массива для решета Эратосфена
+	while (n + 1 > int(double(count) / log(count))) //Добавляем 1, чтобы удоствериться, что места в массиве точно хватит - при выводе все равно будет доп. проверка
+		count++; 
+
+	bool* a = new bool[count];
+
+	f(count, a);
+
+	for (int i = 2; i < count; i++)
+		if ((a[i] != true) && (n > 0))
+		{
+			cout << i << " ";
+			n--;
+		}
+
+	delete[] a;
+
+
+	return 0;
+} 
