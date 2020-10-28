@@ -1,0 +1,46 @@
+#include <iostream>
+#include <cmath>
+
+//Реализовать алгоритм Карацубы
+
+using namespace std;
+
+
+int main() { 
+
+	int a0, a1{ 0 }, b0, b1, beta, res, n{ 1 };
+
+	cin >> a0 >> b0;
+
+	if (a0 * b0 < 0)
+		res = -1;
+	else res = 1;
+  
+	a0 = abs(a0);
+	b0 = abs(b0); 
+  
+	if (a0 < b0)
+	{
+		a0 += b0;
+		b0 = a0 - b0;
+		a0 -= b0;
+	}
+  
+	while (a0 > n*10)
+	{
+		a1 += a0 % 10 * n;
+		a0 /= 10;
+		n *= 10;
+	}
+
+	b1 = b0 % n;
+	b0 /= n; 
+
+	beta = (a0 + a1)*(b0 + b1) - a0 * b0 - a1*b1;
+
+	res *= (a0*b0*n*n + beta*n + a1*b1);
+
+	cout << res;
+
+	return 0;
+}
