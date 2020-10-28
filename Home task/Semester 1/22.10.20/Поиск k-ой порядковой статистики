@@ -1,0 +1,99 @@
+#include <iostream> 
+
+//Поиск k-ой порядковой статистики
+
+using namespace std; 
+
+const int k = 11;
+
+int search(int* arr, int start, int end, int n)
+{   
+	
+	int i = start;
+	int j = end;
+	int mid = (start + end) / 2;
+
+	if (mid == n)
+	{
+		return arr[n];
+	}
+
+	while (i < j)
+	{
+		if (arr[i] > arr[mid])
+		{
+			if (arr[j] < arr[mid])
+			{
+				arr[j] += arr[i];
+				arr[i] = arr[j] - arr[i];
+				arr[j] -= arr[i];
+
+				i++;
+				j--; 
+			}
+			else if (j > mid)
+			{
+				j--;
+				continue;
+			}
+			else
+			{
+				arr[i] += arr[mid];
+				arr[mid] = arr[i] - arr[mid];
+				arr[i] -= arr[mid];
+
+				i++; 
+			} 
+		}
+
+
+		else if (arr[j] < arr[mid])
+		{
+			if (arr[i] > arr[mid])
+			{
+				arr[j] += arr[i];
+				arr[i] = arr[j] - arr[i];
+				arr[j] -= arr[i];
+
+				i++;
+				j--; 
+			}
+			else if (i < mid)
+			{
+				i++;
+				continue;
+			}
+			else
+			{
+				arr[j] += arr[mid];
+				arr[mid] = arr[j] - arr[mid];
+				arr[j] -= arr[mid];
+
+				j--; 
+			} 
+		}
+
+		else
+		{
+			i++;
+			j--;
+		}		
+	}
+
+	(n >= mid) ? search(arr, mid+1, end, n) : search(arr, start, mid, n);
+}
+
+
+int main() {
+
+
+	int A[k] = { 108,103, 102, 110, 107,  105, 109, 106, 104, 100, 101 };
+
+	int n;
+	cin >> n;
+
+	cout << search(A, 0, k-1, n-1);
+
+
+	return 0;
+}
