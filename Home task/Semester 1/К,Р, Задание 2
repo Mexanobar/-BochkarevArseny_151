@@ -1,0 +1,136 @@
+#include <iostream>
+
+using namespace std; 
+//Решето Эратосфена взято из дз за 08.10.20
+void f(int n, bool* arr)
+{
+	for (int i = 0; i < n; i++)
+		arr[i] = false;
+
+	for (int i = 2; i < n; i++)
+		if (arr[i] != true)
+			for (int j = i * 2; j < n; j += i)
+				arr[j] = true;
+}
+
+//Поиск взят из дз за 22.10.20
+int search(int* arr, int start, int end, int n)
+{
+
+	int i = start;
+	int j = end;
+	int mid = (start + end) / 2;
+
+	if (arr[mid] == n)
+	{
+		return n;
+	}
+
+	if (start == end)
+		return -1;
+
+
+	while (i < j)
+	{
+		if (arr[i] > arr[mid])
+		{
+			if (arr[j] < arr[mid])
+			{
+				arr[j] += arr[i];
+				arr[i] = arr[j] - arr[i];
+				arr[j] -= arr[i];
+
+				i++;
+				j--;
+			}
+			else if (j > mid)
+			{
+				j--;
+				continue;
+			}
+			else
+			{
+				arr[i] += arr[mid];
+				arr[mid] = arr[i] - arr[mid];
+				arr[i] -= arr[mid];
+
+				i++;
+			}
+		}
+
+
+		else if (arr[j] < arr[mid])
+		{
+			if (arr[i] > arr[mid])
+			{
+				arr[j] += arr[i];
+				arr[i] = arr[j] - arr[i];
+				arr[j] -= arr[i];
+
+				i++;
+				j--;
+			}
+			else if (i < mid)
+			{
+				i++;
+				continue;
+			}
+			else
+			{
+				arr[j] += arr[mid];
+				arr[mid] = arr[j] - arr[mid];
+				arr[j] -= arr[mid];
+
+				j--;
+			}
+		}
+
+		else
+		{
+			i++;
+			j--;
+		}
+	}
+
+	(n >= arr[mid]) ? search(arr, mid, end, n) : search(arr, start, mid, n);
+}
+
+
+int main() { 
+	int k, n;
+
+	cin >> k;
+
+	bool* a = new bool[k];
+
+	f(k, a);
+
+	for (int i = 0; i < k; i++)
+		cout << i << ": " << a[i] << "\n";
+
+	cin >> n;
+	int* arr = new int[n];
+
+	for (int i = 0; i < n; i++)
+		cin >> arr[i];
+
+
+	cout << "\n\n"; 
+	int temp;  
+	for (int i = 0; i < n; i++)
+	{
+		int* temp_arr = new int[n]; 
+		//Пришлось вставить костыль из дополнительного массива, т.к. я не знаю, как передавать динамический массив в функцию так, чтобы он не изменялся после её выполнения 
+																												    //(как если бы это было с массивом фиксированной длины)
+		for (int j = 0; j < n; j++)
+			temp_arr[j] = arr[j];
+
+		if ((temp != -1) && (a[temp] == false))
+			cout << temp << "\n";
+
+		delete temp_arr;
+	}
+	
+	delete arr;
+	delete a;
+}
