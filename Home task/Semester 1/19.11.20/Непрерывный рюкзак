@@ -1,0 +1,68 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+//решение задачи о непрерывном рюкзаке
+
+using std::vector;
+
+using namespace std;
+
+double get_optimal_value(int capacity, vector<int> weights, vector<int> values) {
+	double value = 0.0;
+	vector<double> k(weights.size());
+	for (int i{ 0 }; i < weights.size(); i++)
+		k[i] = (double)values[i] / weights[i];
+
+	for (int i{0}; i < weights.size() -1; i++)
+		for (int j{ i+1 }; j < weights.size(); j++)
+			if (k[i] < k[j])
+			{
+				k[i] += k[j];
+				k[j] = k[i] - k[j];
+				k[i] -= k[j];
+
+
+				weights[i] += weights[j];
+				weights[j] = weights[i] - weights[j];
+				weights[i] -= weights[j];
+
+				values[i] += values[j];
+				values[j] = values[i] - values[j];
+				values[i] -= values[j];
+			}
+
+	int i{ 0 };
+	while ((capacity > 0) && (i < weights.size()))
+	{
+		if (capacity >= weights[i])
+		{
+			value += values[i];
+			capacity -= weights[i];
+		}
+		else 
+		{
+			value += (double)values[i] *capacity/weights[i];
+			capacity = 0;
+		}
+		i++;
+	}
+	
+	return value;
+}
+
+int main() {
+	int n;
+	int capacity;
+	std::cin >> n >> capacity;
+	vector<int> values(n);
+	vector<int> weights(n);
+	for (int i = 0; i < n; i++) {
+		std::cin >> values[i] >> weights[i];
+	} 
+	double optimal_value = get_optimal_value(capacity, weights, values);
+
+	std::cout.precision(10);
+	std::cout << optimal_value << std::endl;
+	return 0;
+}
