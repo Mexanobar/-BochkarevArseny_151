@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <utility>
+#include <algorithm>
+
+/* Дана аудитория и k человек желающих читать в ней в лекции. 
+Каждый человек указывает время лекции со времени a_i до b_i. 
+Организовать расписание, при котором наибольшее количество занятий будет проведено. */
+
+using namespace std;
+
+int f(vector<pair<int, int>> a, int cnt)
+{
+	if (a.size() == 1)
+		return cnt + 1;
+
+	if (a[1].first <= a[0].second)
+	{
+		if (a[1].second <= a[0].second)
+		{
+			a.erase(a.begin());
+			return f(a, cnt);
+		}
+		else
+		{
+			a.erase(a.begin() + 1);
+			return f(a, cnt);
+		}
+	}
+	else
+	{
+		a.erase(a.begin());
+		return f(a, cnt + 1);
+	}
+}
+
+bool cmp(pair<int, int> i, pair<int, int> j)
+{
+	if (i.first == j.first)
+		return i.second > j.second;
+	return i.first < j.first;
+}
+
+
+int main()
+{
+	int k;
+	cin >> k;
+
+	vector<pair<int, int>> a(k);
+	for (int i{ 0 }; i < k; i++)
+		cin >> a[i].first >> a[i].second; 
+	sort(a.begin(), a.end(), cmp);
+
+
+	cout << "\n" << f(a, 0) << "\n";
+
+
+	return 0;
+}
