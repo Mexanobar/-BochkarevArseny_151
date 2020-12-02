@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+
+
+//Дана прямоугольная клетчатая карта, в ячейках которой указаны стоимости прохода по клетке. 
+//Из клетки ходить вниз, вправо и по диагонали вниз-вправо. 
+//Напишите программу, находящую самый дешевый путь из верхней левой в правую нижнюю клетку.
+
+
+
+using namespace std;
+
+int min(int a, int b, int c) 
+{
+	if ((a <= b) && (a <= c)) return a;
+	if ((b <= a) && (b <= c)) return b;
+	return c;
+}
+
+int main() {
+	int n, m, h;
+	cin >> n >> m;
+
+	vector <int> help;
+	vector <vector<int>> arr;
+	for (int i{ 0 }; i < n; i++)
+	{
+		help.clear();
+		for (int j{ 0 }; j < m; j++)
+		{
+			cin >> h;
+			help.push_back(h);
+		}
+		arr.push_back(help);
+	}  
+
+	arr[0][0] = 0;
+	for (int i{ 1 }; i < m; i++)
+		arr[0][i] += arr[0][i - 1];
+	for (int i{ 1 }; i < n; i++)
+		arr[i][0] += arr[i - 1][0];
+
+	for (int i{ 1 }; i < n; i++)
+		for (int j{ 1 }; j < m; j++)
+			arr[i][j] += min(arr[i - 1][j], arr[i - 1][j - 1], arr[i][j - 1]);
+
+
+	cout << arr[n - 1][m - 1];
+	return 0;
+}
+
