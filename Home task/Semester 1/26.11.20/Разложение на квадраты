@@ -6,8 +6,8 @@
 //Написать программу находящую разложения натурального числа N на сумму натуральных квадратов с наименьшим возможным числом слагаемых.
 
 
-using namespace std; 
- 
+using namespace std;
+
 int main()
 {
 	double n;
@@ -21,38 +21,39 @@ int main()
 		v[i].first = 5;
 
 	v[1].first = 1;
-	v[1].second.push_back(1); 
+	v[1].second.push_back(1);
 
 
 
 	for (int i = 2; i < n; i++)
-	{  
-		double j = i-1;
+	{
+		
 		//cout << i << "\n";
 		if (sqrt(i) == round(sqrt(i)))
 		{
 			v[i].first = 1;
 			v[i].second.push_back(i);
 		}
-		else while (j >= i/2)
+		else for (int j{ 0 }; j <= sqrt(i)+1;j++)
 		{
 			if (v[i].first == 2)
 				break;
-			if (v[i].first > v[i - j].first + v[j].first)
-			{
-				v[i].first = v[i - j].first + v[j].first;
-				v[i].second.clear(); 
-				v[i].second.insert(v[i].second.end(), v[j].second.begin(), v[j].second.end());
-				v[i].second.insert(v[i].second.end(), v[i-j].second.begin(), v[i-j].second.end()); 
-			}
-			j--;
+			if (i-j*j >= 0)
+				if (v[i].first > v[i - j * j].first+1)
+				{
+					v[i].first = v[i - j * j].first + 1;
+					v[i].second.clear();
+					v[i].second.insert(v[i].second.end(), v[i - j * j].second.begin(),
+						v[i - j * j].second.end());
+					v[i].second.push_back(j * j);
+				} 
 		}
 	}
 
 	cout << "\n\n";
-	 
-	for (int i{ 0 }; i < v[n-1].second.size(); i++)
-		cout << v[n-1].second[i] << " ";
-	cout << "\n\n"; 
+
+	for (int i{ 0 }; i < v[n - 1].second.size(); i++)
+		cout << v[n - 1].second[i] << " ";
+	cout << "\n\n";
 	return 0;
 }
