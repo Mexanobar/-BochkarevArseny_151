@@ -7,12 +7,7 @@
 
 
 using namespace std; 
-
-bool sqr(double n)
-{
-	return (sqrt(n) == round(sqrt(n)));
-}
-
+ 
 int main()
 {
 	double n;
