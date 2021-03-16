@@ -36,6 +36,6 @@ count=$((count + 1))
 done
 
 #deleting temporary file
-#rm res.txt
+rm res.txt
 echo $'\n' $'\n'
 echo OK tests: $OK_count
