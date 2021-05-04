@@ -139,30 +139,7 @@ void tree::insert(int k)
   }
   fix_Height(new_node); 
 
-  rebalance(new_node);
-
-
-  std::cout << "insert(), new_node->key == " << new_node->key << "\n";
-  std::cout << "insert(), new_node->parent->key == ";
-  if (new_node->parent != NULL)
-  {
-    std::cout << new_node->parent->key << "\n";
-    if (new_node->parent->heir1 != NULL)
-  	  std::cout << "insert(), new_node->parent->heir1->key == " << new_node->parent->heir1->key << "\n";
-    if (new_node->parent->heir1 != NULL)
-  	  std::cout << "insert(), new_node->parent->heir2->key == " << new_node->parent->heir2->key << "\n";
-    if (new_node->parent->parent != NULL)
-    {
-  	  std::cout << "insert(), new_node->parent->parent->key == " << new_node->parent->parent->key << "\n";
-      if (new_node->parent->parent->heir1 != NULL)
-  	    std::cout << "insert(), new_node->parent->parent->heir1->key == " << new_node->parent->parent->heir1->key << "\n";
-      if (new_node->parent->parent->heir2 != NULL)
-  	    std::cout << "insert(), new_node->parent->parent->heir2->key == " << new_node->parent->parent->heir2->key << "\n";
-    }
-  }
-  else 
-  	 std::cout << "NULL\n";
-
+  rebalance(new_node); 
   this->change_tree(new_node);
 
 }
@@ -216,9 +193,7 @@ void rebalance(tree::node *ptr)
     rebalanceLeft(ptr);
    
   fix_Height(ptr);
-
-  std::cout << " rebalance(), key == " << ptr->key << "\n";
-
+  
 
   if (prnt != NULL)
     rebalance(prnt); 
@@ -254,9 +229,7 @@ void rotateRight(tree::node* & ptr)
 {
   tree::node* left = ptr->heir1;
   tree::node* right = ptr->heir2;
-  tree::node* left_right = (left != NULL) ? left->heir2 : NULL;
-
-  std::cout << "   rotateRight(), key == " << ptr->key << "\n";
+  tree::node* left_right = (left != NULL) ? left->heir2 : NULL; 
   left->heir2 = ptr;
   left->parent = ptr->parent;
   ptr->parent = left;
@@ -268,11 +241,7 @@ void rotateRight(tree::node* & ptr)
   	else 
   		left->parent->heir2 = left;
   }
-
-  std::cout << "   rotateRight(), left == " << left->key << "\n";
-  std::cout << "   rotateRight(), left->heir1 == " << left->heir1->key << "\n";
-  std::cout << "   rotateRight(), left->heir2 == " << left->heir2->key << "\n";
-  
+ 
 
   ptr->heir1 = left_right;
   if (ptr->heir1 != NULL)
@@ -288,8 +257,7 @@ void rotateLeft(tree::node* & ptr)
   tree::node* right = ptr->heir2;
   tree::node* left = ptr->heir1;
   tree::node* right_left = (right != NULL ) ? right->heir1 : NULL;
-  
-  std::cout << "  rotateLeft(), key == " << ptr->key << "\n";
+   
   right->heir1 = ptr;
   right->parent = ptr->parent;
   ptr->parent = right;
@@ -300,11 +268,7 @@ void rotateLeft(tree::node* & ptr)
   	else 
   		right->parent->heir2 = right;
   }
-
-  std::cout << "  rotateLeft(), right == " << right->key << "\n";
-  std::cout << "  rotateLeft(), right->heir1 == " << right->heir1->key << "\n";
-  std::cout << "  rotateLeft(), right->heir2 == " << right->heir2->key << "\n";
-  std::cout << "  rotateLeft(), right->heir1->parent == " << right->heir1->parent->key << "\n";
+ 
 
   ptr->heir2 = right_left;
   if (ptr->heir2 != NULL)
@@ -321,9 +285,7 @@ void rotateLeft(tree::node* & ptr)
 void tree::bfs(std::vector<std::vector<int> > &V, int depth, node* pv)
 {
   if (pv == NULL)
-    pv = p;
-  //std::cout << "key: " << pv->key << "\n";
-  //std::cout << "depth: " << depth << "\n";
+    pv = p; 
   if (depth == V.size()) V.push_back({});
   V[depth].push_back(pv->key);
   if (pv->heir1 != NULL) 
@@ -335,8 +297,7 @@ void tree::bfs(std::vector<std::vector<int> > &V, int depth, node* pv)
 void tree::bfs()
 {
   std::vector<std::vector<int> > res;
-  bfs(res);
-  //std::cout << "qqq\n";
+  bfs(res); 
   for (int i = 0; i < res.size(); i++)
   {
   	std::cout << "layer " << i << ": ";
@@ -360,35 +321,16 @@ int main()
   tree new_t(k); 
 
   std::cin >> k;
-  new_t.insert(k); 
+  new_t.insert(k);  
+	
+  std::cin >> k;
+  new_t.insert(k);  
 
-  std::cout << "\n\n"; 
-  new_t.bfs(); 
-  std::cout << "\n\n"; 
+  std::cin >> k;
+  new_t.insert(k);  
 
   std::cin >> k;
   new_t.insert(k); 
-
-  std::cout << "\n\n"; 
-  new_t.bfs(); 
-  std::cout << "\n\n"; 
-
-  std::cin >> k;
-  new_t.insert(k); 
-
-  std::cout << "\n\n"; 
-  new_t.bfs(); 
-  std::cout << "\n\n"; 
-
-  std::cin >> k;
-  new_t.insert(k); 
-
-  std::cin >> k;
-  new_t.insert(k); 
-
-  std::cin >> k;
-  new_t.insert(k); 
-
 
   std::cout << "\n\n"; 
   new_t.bfs(); 
