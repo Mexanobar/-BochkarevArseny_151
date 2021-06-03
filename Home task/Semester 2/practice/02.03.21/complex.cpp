@@ -45,8 +45,21 @@ struct Complex
     {
         float new_a = a*x.a + b*x.b;
         float new_b = b*x.a - x.b*a;
-        a = new_a / (x.a*x.a + x.b*x.b);
-        b = new_b / (x.a*x.a + x.b*x.b);
+        try
+        {
+            if (x.a*x.a + x.b*x.b != 0) 
+            {
+                a = new_a / (x.a*x.a + x.b*x.b);
+                b = new_b / (x.a*x.a + x.b*x.b);
+            }
+            else 
+                throw "can't divide by zero!\n";
+        }
+        catch(const char* errMsg)
+        {
+            std::cout << errMsg;
+        }
+
         return *this;
     }
 
@@ -103,7 +116,7 @@ float abs(Complex &x)
 int main() 
 {
 
-    Complex a(10.0, 18.6), b(0, -6.2); 
+    Complex a(10.0, 18.6), b(0, 0); 
 
     cout << a << " - " << b << " = " << a-b << "\n";
     cout << a << " + " << b << " = " << a+b << "\n";
