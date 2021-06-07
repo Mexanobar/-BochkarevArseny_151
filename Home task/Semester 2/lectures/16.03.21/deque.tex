@@ -1,0 +1,28 @@
+\documentclass[a4paper,11pt]{report}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[T1,T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+ 
+\begin{document}
+ 
+\chapter{Устройство элементов}
+Элементом двунаправленной очереди структура node, хранящий данные и ссылки на предыдущий и следующий узлы.
+\chapter{Устройство push/pop}
+\section{Устройство push}
+push\_front(int k)/push\_back(int k) добавит новый узел в начало/конец, присвоит переменной data значение k, предыдущий first/last станет для новго узла next/prev, новый node станет first/last. 
+\section{Устройство pop}
+pop\_front()/pop\_back() вернёт data первого/последнего элемента и, в отличие от функций head()/tail(), удалит этот узел. node, являющийся next/prev для удаленного, станет новым first/last. 
+\chapter{Оценки сложности работы} 
+\begin{itemize}
+	\item head() - O(1), т.к. хранится в качестве переменной;
+	\item tail() - O(1), т.к. хранится в качестве переменной;
+	\item push\_front(int k) - O(1), т.к. можно добавлять только с одной стороны;
+	\item push\_back(int k) - O(1), т.к. можно добавять только с одной стороны;
+	\item pop\_front() - O(1), т.к. можно удалять только с одной стороны;
+	\item pop\_back() - O(1), т.к. можно удалять только с одной стороны;
+	\item size() - O(1), т.к. хранится в качестве переменной;
+	\item print() - O(n) - т.к. идём с первого элемента к последнему и выписываем;
+	\item clear() - O(n) - т.к. идём с первого элемента к последнему и удаляем;
+\end{itemize} 
+\end{document}
